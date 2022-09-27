@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入element样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入element组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="http://localhost/app/css/repass.css">
+</head>
+<body>
+
+  <div id="app">
+    <div id="main">
+        <img class="re-img" src="http://localhost/app/static/img/repass.png"/>
+        <el-form class="info-form" :label-position="left">
+            <el-form-item>
+            手机号：
+            <el-input
+                prefix-icon="el-icon-mobile-phone"
+                style="width: 270px"
+                type="text"
+                v-model="sendData.phone"></el-input>
+            </el-form-item>
+            <el-form-item>
+            新密码：
+            <el-input
+                prefix-icon="el-icon-key"
+                style="width: 270px"
+                type="password"
+                v-model="sendData.password"></el-input><br>
+            </el-form-item>
+            <el-form-item>
+            重复新密码：
+            <el-input
+                prefix-icon="el-icon-key"
+                style="width: 245px"
+                type="password"
+                v-model="repass"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button @click="toRepass"
+                           class="sub-button"
+                           :disabled="!same"
+                >提交</el-button>
+            </el-form-item>
+        </el-form>
+        <p class="wrong-msg"
+           style="color: red;
+                        position: absolute;
+                        top:255px;
+                        left: 1000px;
+                        right: 0;
+                        bottom: 0;"
+           v-if="!same">
+            密码不一致！
+        </p>
+    </div>
+  </div>
+  <script src="http://localhost/app/js/repass.js"></script>
+
+</body>
+
+</html>

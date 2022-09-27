@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  }
+  body {
+    background-image: url("https://img.zcool.cn/community/01261a5ad4536ca801204029f24553.jpg@2o.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    opacity: 0.9;
+  }
+  #main {
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: 400px;
+    background: rgb(255, 255, 255);
+    /* border-radius: 10%; */
+    box-shadow: 10px 10px 10px rgb(181, 27, 68);
+    display:flex;
+    justify-content:center;
+  }
+  .info-form {
+    position: absolute;
+    top:100px;
+  }
+  .re-img {
+    margin: 20px 0;
+    top: 35px;
+    left: 10%;
+    position: absolute;
+    height: 280px;
+    width: 280px;
+    border-radius: 30px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+  }
+  .sub-button {
+    height: 40px;
+    width: 80px;
+    position: absolute;
+    top:10px;
+    left: 150px;
+    right: 0;
+    bottom: 0;
+  }
+  .wrong-msg {
+    color: red;
+    position: absolute;
+    top:265px;
+    left: 0;
+    right: 200px;
+    bottom: 0;
+  }

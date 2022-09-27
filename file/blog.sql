@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS `blog`;
+CREATE DATABASE `blog`;
+USE `blog`;
+
+DROP TABLE IF EXISTS `t_user`
+CREATE TABLE `t_user`(
+  mark UNSIGNED INT NOT NULL PRIMARY KEY,
+  
+)

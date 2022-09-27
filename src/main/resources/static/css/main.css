@@ -1,0 +1,93 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+body {
+    background-image: url("https://img.zcool.cn/community/01261a5ad4536ca801204029f24553.jpg@2o.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+#app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    opacity: 0.9;
+}
+#main {
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: 85%;
+    background: rgb(255, 255, 255);
+    /* border-radius: 10%; */
+    box-shadow: 0px 10px 10px rgb(181, 27, 68);
+    display:flex;
+    justify-content:center;
+}
+#head-img {
+    position:absolute;
+    top: -65px;
+    bottom: 0;
+    margin: auto;
+    width:250px;
+}
+.el-header, .el-footer {
+    background-color: #410d5a;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+}
+
+.el-aside {
+    background-color: #314e3f;
+    color: rgb(116, 25, 25);
+    text-align: center;
+    line-height: 200px;
+}
+
+.el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+}
+
+body > .el-container {
+    margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+}
+#upfile {
+    position:absolute;
+    top: 110px;
+    bottom: 0;
+    width: 20%;
+    margin:0;
+}
+#info {
+    position:absolute;
+    top: 150px;
+    bottom: 0;
+    left: 500px;
+    right: 0;
+    margin:0;
+    width: 300px;
+}
+#ava-img {
+    position:absolute;
+    top: 10px;
+    margin: auto;
+    right: 100px;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入element样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入element组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="http://localhost/css/index.css">
+</head>
+<body>
+
+<div id="app">
+    <div id="admin">
+        <div class="pos" v-loading="loading">
+            <img class="adminh1" src="http://localhost/img/login-dark.png">
+            <el-form
+                    :model="userData"
+                    status-icon
+                    :rules="rules"
+                    ref="userData"
+                    label-width="100px"
+                    class="demo-ruleForm"
+                    action="/dologin"
+                    method="post"
+            >
+                <el-form-item label="用户名：" prop="username">
+                    <el-input
+                            prefix-icon="el-icon-user"
+                            style="width: 250px"
+                            type="text"
+                            v-model="userData.username"
+                            autocomplete="off"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="密 码：" prop="password">
+                    <el-input
+                            prefix-icon="el-icon-menu"
+                            style="width: 250px"
+                            show-password
+                            type="password"
+                            v-model="userData.password"
+                            autocomplete="off"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item class="button-sub">
+                    <el-button type="primary" @click="login" plain>提交</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-link href="http://localhost/repass" class="go-psw" icon="el-icon-refresh-left">忘记密码</el-link>
+                </el-form-item>
+                <el-form-item>
+                    <el-link href="http://localhost/reg"  class="go-reg" icon="el-icon-edit-outline">前往注册</el-link>
+                </el-form-item>
+                <img class="logo"
+                     src="https://tse3-mm.cn.bing.net/th/id/OIP-C.AfDkJfG9NOP57YVK2PkOigHaIY?pid=ImgDet&rs=1">
+            </el-form>
+        </div>
+    </div>
+</div>
+<script src="http://localhost/js/index.js"></script>
+
+</body>
+
+</html>

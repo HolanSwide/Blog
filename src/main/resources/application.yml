@@ -1,0 +1,42 @@
+
+mybatis:
+  mapper-locations: classpath*:mappers/*.xml
+server:
+  port: 80
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?characterEncoding=utf8&characterSetResults=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+  # Druid
+    druid:
+      filters: stat,wall,stat,slf4j,default
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: 123456
+      filter:
+        slf4j:
+          enabled: true
+          statement-create-after-log-enabled: false
+          statement-log-enabled: true
+          statement-executable-sql-log-enable: true
+          statement-log-error-enabled: true
+          result-set-log-enabled: false
+logging:
+  level:
+    druid:
+      sql:
+        Statement: debug  # 这里也很重要 这里就是将sql的打印级别调整为debug
+

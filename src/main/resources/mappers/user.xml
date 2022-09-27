@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holanswide.blog.dao.UserMapper">
+    <insert id="addUser">
+        insert into `t_user`(uid,username,password,auth)
+            values(#{uid},#{username},#{password},#{auth});
+    </insert>
+
+
+    <select id="queryUserAll" resultType="com.holanswide.blog.pojo.User">
+        select * from `t_user`;
+    </select>
+    <select id="queryUserByUsername" resultType="com.holanswide.blog.pojo.User">
+        select * from `t_user` where username=#{username};
+    </select>
+    <select id="queryUserByUid" resultType="com.holanswide.blog.pojo.User">
+        select * from t_user where uid=#{uid};
+    </select>
+    <select id="queryUserCount" resultType="java.lang.Integer">
+        select count(1) from `t_user`;
+    </select>
+</mapper>
