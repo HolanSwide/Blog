@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holanswide.blog.dao.UserInfoMapper">
+    <insert id="insertUserInfo">
+        insert into t_user_info(`uid`,`email`,`phone`,`birth`,`address`,`sex`,`sign`) values(#{uid},#{email},#{phone},#{birth},#{address},#{sex},#{sign});
+    </insert>
+
+    <select id="queryUserInfoAll" resultType="com.holanswide.blog.pojo.UserInfo">
+        select * from t_user_info;
+    </select>
+    <select id="queryUserInfoByUid" resultType="com.holanswide.blog.pojo.UserInfo">
+        select * from t_user_info where uid=#{uid};
+    </select>
+    <select id="queryUserInfoByParam" resultType="com.holanswide.blog.pojo.UserInfo">
+        select * from t_user_info where ${param} = #{valueStr} ;
+    </select>
+</mapper>

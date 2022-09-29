@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入element组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <link rel="stylesheet" href="http://localhost/app/css/reg.css">
+    <link rel="stylesheet" href="http://localhost/css/reg.css">
 </head>
 <body>
 
@@ -49,6 +49,9 @@
                 autocomplete="off"
               ></el-input>
             </el-form-item>
+                <div  style="position: absolute;left: 150px; bottom: -110px; ">
+                <el-button type="success" round @click="goReg">注册</el-button>
+                </div>
         </el-form>
         </div>
         <div id="info" v-if="active==1">
@@ -78,13 +81,13 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="性别：" prop="sex">
-                <el-radio v-model="sendData.userInfo.sex" label="1">男</el-radio>
-                <el-radio v-model="sendData.userInfo.sex" label="2">女</el-radio>
-                <el-radio v-model="sendData.userInfo.sex" label="3">保密</el-radio>
+                <el-radio v-model="sendData.userInfo.sex" label="男">男</el-radio>
+                <el-radio v-model="sendData.userInfo.sex" label="女">女</el-radio>
+                <el-radio v-model="sendData.userInfo.sex" label="其他">保密</el-radio>
             </el-form-item>
-            <el-form-item label="生日：" prop="born">
+            <el-form-item label="生日：" prop="birth">
                 <el-col :span="28">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="sendData.userInfo.born" style="width: 80%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="sendData.userInfo.birth" style="width: 80%;"></el-date-picker>
                   </el-col>
             </el-form-item>
         </el-form>
@@ -99,7 +102,7 @@
       </div>
     
   </div>
-  <script src="http://localhost/app/js/reg.js"></script>
+  <script src="http://localhost/js/reg.js"></script>
 
 </body>
 

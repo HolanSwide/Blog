@@ -29,9 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/hello").hasRole("a0")
+                .antMatchers("/app/*.html").hasAnyRole("a0","a1","a2")
         ;
         // 登录页指定；未指定默认 /login
-        http.formLogin().loginPage("/").loginProcessingUrl("/dologin").permitAll().defaultSuccessUrl("/1");
+        http.formLogin().loginPage("/tologin").loginProcessingUrl("/dologin")
+                .permitAll().defaultSuccessUrl("/main")
+                .failureUrl("/error/login");
         // 关闭csrf防止get post攻击
         http.csrf().disable();
         // 注销

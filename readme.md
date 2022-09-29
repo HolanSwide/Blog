@@ -14,6 +14,7 @@
 - 数据库初始化文件 [blog.sql](./file/blog.sql)
 - 表：
   - t_user (uid,username,password,auth)
+  - t_user_info (uid,email,phone,birth,address,sex,sign)
 
 ### 2. 后端接口
 - 采用RESTful风格
