@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holanswide.blog.dao.EssayMapper">
+    <insert id="addEssay">
+        insert into `t_essay`(pid, fid, uid, username, time, cover, title, summary, body)
+            values (#{pid},#{fid},#{uid},#{username},#{time},#{cover},#{title},#{summary},#{body});
+    </insert>
+    <delete id="delEssay">
+        delete from `t_essay` where pid=#{pid};
+    </delete>
+
+    <select id="queryEssayByParam" resultType="com.holanswide.blog.pojo.Essay">
+        select * from `t_essay` where ${key} like #{value} limit ${begin} , ${end};
+    </select>
+    <select id="queryEssayByIndex" resultType="com.holanswide.blog.pojo.Essay">
+        select * from  `t_essay` where `body` like '%${search}%'
+                                    or `title` like '%${search}%'
+                                    or `username` like '%${search}%' limit ${begin},${end};
+    </select>
+</mapper>

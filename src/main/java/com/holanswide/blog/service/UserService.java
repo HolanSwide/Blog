@@ -55,5 +55,10 @@ public class UserService implements UserMapper {
         userMapper.addUser(user);
     }
 
+    @Override
+    public void updUser(User user) {
+        userMapper.updUser(user);
+    }
+
 
 }

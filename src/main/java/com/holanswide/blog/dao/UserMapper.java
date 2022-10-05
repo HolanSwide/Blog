@@ -21,6 +21,8 @@ public interface UserMapper {
     public int queryUserCount();
     public void addUser(User user);
 
+    public void updUser(User user);
+
 
 
 }

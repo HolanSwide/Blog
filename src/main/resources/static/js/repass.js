@@ -21,7 +21,7 @@ new Vue({
             }
           };
         return {
-            url:'http://localhost/user/repass.do',
+            url:'http://localhost/pwd',
         loading:false,
         same:true,
         sendData:{
@@ -46,19 +46,19 @@ new Vue({
     methods: {
         toRepass() {
             axios({
-                method: 'post',
+                method: 'patch',
                 url: this.url,
                 data: JSON.stringify(this.sendData),
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 }
             }).then(res=>{
-                if(res.data["res"]===1) {
+                if(res.data["sign"]===1) {
                     this.$message({
                         message:res.data["msg"]+" 3秒后跳转登录...",
                         type:'success',
                         showClose:true,
-                        duration:0
+                        duration:3000
                     });
                     setTimeout(function (){
                         location.href='http://localhost/';

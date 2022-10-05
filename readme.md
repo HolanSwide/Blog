@@ -39,5 +39,8 @@
 - axios
 - nodejs
 
+# 记录
 
+- @RequestParam 仅仅支持 GET 方式，详情参考[click here](https://blog.csdn.net/m0_49161353/article/details/124156909)
+- mysql创建中文全文索引(**注意：本项目使用的版本不支持中文全文索引，需升级至5.6.以上**) [click here](https://blog.csdn.net/qq_27517377/article/details/98801959)
 

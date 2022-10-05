@@ -6,6 +6,7 @@ import com.holanswide.blog.pojo.UserInfo;
 import com.holanswide.blog.service.UserInfoService;
 import com.holanswide.blog.service.UserService;
 import com.holanswide.blog.util.DataSet;
+import com.holanswide.blog.util.Encoder;
 import com.holanswide.blog.util.GetNew;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,5 +155,47 @@ public class UserController {
         return JSON.toJSONString(
                 user
         );
+    }
+
+    // change pwd
+    @ApiOperation(value = "更改密码",notes = "根据phone")
+    @PreAuthorize("permitAll()")
+    @PatchMapping(value = "/pwd",consumes = "application/json")
+    public @ResponseBody
+    String updPwd(@RequestBody HashMap<String,String> request) {
+        result.clear();
+        String msg="修改成功！";
+        User user=null;
+        int sign=1;
+        String phone = request.get("phone");
+        String pwd = request.get("password ");
+        // find user
+        UserInfo info = userInfoService.queryUserInfoByParam("phone",phone);
+        if(info==null) {
+            sign=0;
+            msg="找不到该用户，请检查参数";
+        } else {
+            user=userService.queryUserByUid(info.getUid());
+        }
+        // check uid
+        if (user==null) {
+            msg="找不到该用户，请检查uid";
+            sign=0;
+        }
+        else if (!userService.queryUserByUid(user.getUid()).getUsername().equals(user.getUsername())) {
+            msg="uid与username不匹配！";
+            sign=0;
+        }
+        // encoder pwd
+        if(sign==1) {
+            user.setPassword(
+                    Encoder.encode(pwd)
+            );
+            userService.updUser(user);
+        }
+        // return msg only
+        result.put("msg",msg);
+        result.put("sign",sign);
+        return JSON.toJSONString(result);
     }
 }

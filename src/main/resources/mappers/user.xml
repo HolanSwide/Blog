@@ -5,6 +5,9 @@
         insert into `t_user`(uid,username,password,auth)
             values(#{uid},#{username},#{password},#{auth});
     </insert>
+    <update id="updUser">
+        update `t_user` set `username`=#{username}, `password`=#{password} where `uid`=#{uid};
+    </update>
 
 
     <select id="queryUserAll" resultType="com.holanswide.blog.pojo.User">

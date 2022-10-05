@@ -19,7 +19,7 @@ public class UserInfo {
     String birth;
     String address;
     String sex;
-    @Column(name = "sign",columnDefinition = "text")
+    @Column(name = "sign",columnDefinition = "tinytext")
     String sign;
 
     public UserInfo() {

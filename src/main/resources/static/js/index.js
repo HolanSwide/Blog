@@ -33,7 +33,8 @@ new Vue({
             isLogin: true,
             userData: {
                 username: '',
-                password: ''
+                password: '',
+                rememberMe:false
             },
             url: {
                 login: 'http://localhost/dologin',
@@ -46,10 +47,9 @@ new Vue({
     methods: {
         login() {
             let isDirect = true;
-            this.loading = true;
             axios({
                 method: 'post',
-                url: this.url.login + "?username=" + this.userData.username + "&password=" + this.userData.password,
+                url: this.url.login + "?username=" + this.userData.username + "&password=" + this.userData.password + "&remember-me=" + this.userData.rememberMe,
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 }

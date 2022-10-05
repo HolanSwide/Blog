@@ -28,6 +28,14 @@
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
 
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入element样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入element组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
 </head>
 <body>
     <!-- START preloader-wrapper -->
@@ -62,7 +70,7 @@
             <li class="nav-item active accordion">
                 <div id="drop-menu" class="drop-menu collapse">
                     <a class="d-block active" href="index-2.html">我的空间</a>
-                    <a class="d-block " href="category.html">退出登录</a>
+                    <a class="d-block " href="/logout">退出登录</a>
                     <a class="d-block " href="post-details.html">消息</a>
                 </div>
                 <a class="nav-link text-white" href="#!" role="button" data-toggle="collapse" data-target="#drop-menu" aria-expanded="false" aria-controls="drop-menu">更多</a>

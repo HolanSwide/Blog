@@ -2,6 +2,7 @@ package com.holanswide.blog.controller;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +25,18 @@ public class HelloController {
     String testHello() {
         return "Hello,world!";
     }
-    @RequestMapping({"/blog"})
+    @RequestMapping({"/blog","/"})
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
     public String toMain() {
         return "redirect:http://localhost/app/index.html";
     }
 
     @PreAuthorize("permitAll()")
-    @RequestMapping({"/tologin","/"})
-    public String toLogin() {return "login";}
+    @RequestMapping({"/tologin"})
+    public String toLogin() { return "login"; }
 
     @PreAuthorize("hasAnyRole('a0','a1','a2')")
-    @RequestMapping("/main")
+    @RequestMapping({"/main"})
     public @ResponseBody
     String toMainPage() {
         hashMap.put("status",200);

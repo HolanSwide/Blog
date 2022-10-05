@@ -19,4 +19,7 @@ public class DataSet {
     public static final HashSet<String> USER_KEY_SET = new HashSet<>(
             Arrays.asList( "uid","username","password","auth" )
     );
+    public static final HashSet<String> ESSAY_KEY_SET = new HashSet<>(
+            Arrays.asList("pid","fid","uid","username","username","time","cover","title","summary")
+    );
 }
