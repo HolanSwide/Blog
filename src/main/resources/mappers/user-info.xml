@@ -4,6 +4,9 @@
     <insert id="insertUserInfo">
         insert into t_user_info(`uid`,`email`,`phone`,`birth`,`address`,`sex`,`sign`) values(#{uid},#{email},#{phone},#{birth},#{address},#{sex},#{sign});
     </insert>
+    <delete id="delUserInfo">
+        delete from t_user_info where uid = #{uid};
+    </delete>
 
     <select id="queryUserInfoAll" resultType="com.holanswide.blog.pojo.UserInfo">
         select * from t_user_info;

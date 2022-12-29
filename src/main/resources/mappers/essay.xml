@@ -5,6 +5,9 @@
         insert into `t_essay`(pid, fid, uid, username, time, cover, title, summary, body)
             values (#{pid},#{fid},#{uid},#{username},#{time},#{cover},#{title},#{summary},#{body});
     </insert>
+    <insert id="addField">
+        insert into `t_field`(fid,fname) values (#{fid},#{fname});
+    </insert>
     <delete id="delEssay">
         delete from `t_essay` where pid=#{pid};
     </delete>
@@ -16,5 +19,20 @@
         select * from  `t_essay` where `body` like '%${search}%'
                                     or `title` like '%${search}%'
                                     or `username` like '%${search}%' limit ${begin},${end};
+    </select>
+    <select id="queryCount" resultType="java.lang.Integer">
+        select count(1) from t_essay;
+    </select>
+    <select id="queryFieldAll" resultType="com.holanswide.blog.pojo.Field">
+        select * from `t_field`;
+    </select>
+    <select id="queryFieldByFid" resultType="com.holanswide.blog.pojo.Field">
+        select * from t_field where fid=#{fid};
+    </select>
+    <select id="queryFieldByFname" resultType="com.holanswide.blog.pojo.Field">
+        select * from t_field where fname=#{fname};
+    </select>
+    <select id="queryEssayAuto" resultType="com.holanswide.blog.pojo.Essay">
+        select * from t_essay order by i desc limit ${begin},${end};
     </select>
 </mapper>

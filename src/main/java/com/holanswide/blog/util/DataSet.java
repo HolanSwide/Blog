@@ -14,12 +14,12 @@ import java.util.HashSet;
 @Component
 public class DataSet {
     public static final HashSet<String> USERINFO_KEY_SET = new HashSet<>(
-            Arrays.asList( "uid","email","phone","birth","address","sex","sign" )
+            Arrays.asList( "uid","email","phone" )
     );
     public static final HashSet<String> USER_KEY_SET = new HashSet<>(
             Arrays.asList( "uid","username","password","auth" )
     );
     public static final HashSet<String> ESSAY_KEY_SET = new HashSet<>(
-            Arrays.asList("pid","fid","uid","username","username","time","cover","title","summary")
+            Arrays.asList("auto","pid","fid","uid","username","username","time","body","cover","title","summary")
     );
 }

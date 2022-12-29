@@ -21,4 +21,6 @@ public interface UserInfoMapper {
     public UserInfo queryUserInfoByParam(@Param("param") String param,@Param("valueStr") String valueStr);
 
     public void insertUserInfo(UserInfo userInfo);
+
+    public void delUserInfo(@Param("uid") String uid);
 }

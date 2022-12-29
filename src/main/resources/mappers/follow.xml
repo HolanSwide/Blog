@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holanswide.blog.dao.FollowMapper">
+    <insert id="insertFollow">
+        insert into t_follow(uid,username,followUid,followUsername,time)
+            values(#{uid},#{username},#{followUid},#{followUsername},#{time});
+    </insert>
+    <delete id="deleteFollow">
+        delete from t_follow where uid = #{uid} and followUid = #{followUid} ;
+    </delete>
+
+    <select id="queryByUid" resultType="com.holanswide.blog.pojo.Follow">
+        select * from t_follow where uid = #{uid};
+    </select>
+    <select id="queryByFollowUid" resultType="com.holanswide.blog.pojo.Follow">
+        select * from t_follow where followUid = #{followUid};
+    </select>
+    <select id="queryByUidAndFollowUid" resultType="com.holanswide.blog.pojo.Follow">
+        select * from t_follow where uid = #{uid} and followUid = #{followUid};
+    </select>
+</mapper>

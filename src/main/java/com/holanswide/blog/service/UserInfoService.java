@@ -35,4 +35,9 @@ public class UserInfoService implements UserInfoMapper {
     public void insertUserInfo(UserInfo userInfo) {
         userInfoMapper.insertUserInfo(userInfo);
     }
+
+    @Override
+    public void delUserInfo(String uid) {
+        userInfoMapper.delUserInfo(uid);
+    }
 }

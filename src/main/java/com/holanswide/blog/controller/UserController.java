@@ -1,8 +1,10 @@
 package com.holanswide.blog.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.holanswide.blog.pojo.Follow;
 import com.holanswide.blog.pojo.User;
 import com.holanswide.blog.pojo.UserInfo;
+import com.holanswide.blog.service.FollowService;
 import com.holanswide.blog.service.UserInfoService;
 import com.holanswide.blog.service.UserService;
 import com.holanswide.blog.util.DataSet;
@@ -15,8 +17,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import java.text.DateFormat;
+import java.util.*;
 
 /**
  * @author ：holan
@@ -31,12 +35,124 @@ public class UserController {
     GetNew getNew;
     @Autowired
     UserInfoService userInfoService;
+    @Autowired
+    FollowService followService;
     HashMap<String, Object> result = new HashMap<>();
+
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
+    @GetMapping(value = "/usr/isfollow")
+    @ApiOperation(value = "查找两个用户是否关注", notes = "传入的数据请确保uid & followUid正确")
+    public @ResponseBody
+    String getIsFollowed(@RequestParam("uid") String uid, @RequestParam("followUid") String followUid) {
+        result.clear();
+        boolean isFollowed = true;
+        Follow f = followService.queryByUidAndFollowUid(uid,followUid);
+        if(f == null) isFollowed = false;
+        result.put("isFollowed",isFollowed);
+        result.put("data",f);
+        return JSON.toJSONString(result);
+    }
+
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
+    @GetMapping({"/search"})
+    @ApiOperation(value = "重定向至搜索结果页")
+    public @ResponseBody String toSearchPage(@RequestParam("option") int option, @RequestParam("text") String text) {
+        HashMap<String, String> result = new HashMap<>();
+        String url;
+        String msg = "成功";
+        int status = 1;
+        switch (option) {
+            case 1: // user
+                User user = userService.queryUserByUsername(text);
+                if(user == null)  {
+                    msg = "未找到，请检查输入是否正确";
+                    status = 0;
+                } else {
+                    text = user.getUid();
+                }
+                url = "/app/index-2.html?" + text;
+                break;
+            case 2: // essay
+                url = "/app/index.html?" + text;
+                break;
+            default:
+                url =  "/app/index.html";
+                break;
+        };
+        result.put("goto",url);
+        result.put("status",String.valueOf( status ));
+        result.put("msg",msg);
+        return JSON.toJSONString(result);
+    }
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
+    @PutMapping(value = "/usr/follow")
+    @ApiOperation(value = "添加关注", notes = "传入的数据请确保uid & followUid正确")
+    public @ResponseBody String addFollow(String uid, String followUid) {
+        Follow follow = new Follow();
+        follow.setFollowUid(followUid); follow.setUid(uid);
+        follow.setFollowUsername(
+                userService.queryUserByUid(followUid).getUsername()
+        );
+        follow.setUsername(
+                userService.queryUserByUid(uid).getUsername()
+        );
+        follow.setTime(
+                DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CHINA).format(new Date())
+        );
+        followService.insertFollow(follow);
+        return JSON.toJSONString(follow);
+    }
+
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
+    @GetMapping(value = "/usr/follow")
+    @ApiOperation(value = "查找本用户关注的用户", notes = "传入的数据请确保uid正确")
+    public @ResponseBody
+    String getFollow(@RequestParam("uid") String uid) {
+        result.clear();
+        List<Follow> lf = followService.queryByUid(uid);
+        // 转化
+        List<BasicUserInfo> lb = new ArrayList<>();
+        for (Follow f : lf) {
+            lb.add(new BasicUserInfo(f.getFollowUid(), f.getFollowUsername()));
+        }
+        // 发送
+        result.put("follow", lb);
+        return JSON.toJSONString(result);
+    }
+
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
+    @DeleteMapping("/usr/follow")
+    @ApiOperation(value = "取消关注", notes = "传入的数据请确保uid正确")
+    public @ResponseBody
+    String delFollow(String uid, String followUid) {
+        result.clear();
+        followService.deleteFollow(uid, followUid);
+        result.put("msg", "成功");
+        return JSON.toJSONString(result);
+    }
+
+    @PreAuthorize("hasAnyRole('a0','a1','a2')")
+    @GetMapping(value = "/usr/follower")
+    @ApiOperation(value = "查找本用户的粉丝", notes = "传入的数据请确保uid正确")
+    public @ResponseBody
+    String getFollower(@RequestParam("uid") String uid) {
+        result.clear();
+        List<Follow> lf = followService.queryByFollowUid(uid);
+        // 转化
+        List<BasicUserInfo> lb = new ArrayList<>();
+        for (Follow f : lf) {
+            lb.add(new BasicUserInfo(f.getUid(), f.getUsername()));
+        }
+        // 发送
+        result.put("follower", lb);
+        return JSON.toJSONString(result);
+    }
 
     // add user-info
     @PreAuthorize("permitAll()")
     @PutMapping(value = "/info", consumes = "application/json")
-    @ApiOperation(value = "添加用户信息", notes = "传入的数据请确保uid正确")
+    @CrossOrigin
+    @ApiOperation(value = "添加或修改用户信息", notes = "传入的数据请确保uid正确")
     public @ResponseBody
     String addUserInfo(@RequestBody UserInfo info) {
         result.clear();
@@ -50,10 +166,14 @@ public class UserController {
             // check if the info exists
             for (String str : DataSet.USERINFO_KEY_SET)
                 if (userInfoService.queryUserInfoByParam(str, info.getUid()) != null) {
-                    msg = "该" + str + "已存在!";
-                    sign = 0;
-                    break;
+                    if (!userInfoService.queryUserInfoByParam(str, info.getUid()).getUid().equals(info.getUid())) {
+                        msg = "该" + str + "已存在!";
+                        sign = 0;
+                        break;
+                    }
                 }
+            // delete info with this uid
+            userInfoService.delUserInfo(info.getUid());
             // insert
             if (sign == 1) {
                 userInfoService.insertUserInfo(info);
@@ -64,7 +184,7 @@ public class UserController {
         return JSON.toJSONString(result);
     }
 
-    // search user-info by uid or username or email or phone
+    // search user-info by uid or username or email or phone , return user & data(userInfo)
     @PreAuthorize("hasAnyRole('a0','a1','a2')")
     @PostMapping(value = "/info", consumes = "application/json")
     public @ResponseBody
@@ -84,8 +204,11 @@ public class UserController {
                 sign = 0;
                 msg = "没有找到";
                 result.put("data", "null");
-            } else
-                result.put("data", JSON.toJSONString(userInfo));
+            } else {
+                User user = userService.queryUserByUid(userInfo.getUid());
+                result.put("data", userInfo);
+                result.put("user",user);
+            }
         }
         result.put("msg", msg);
         result.put("sign", sign);
@@ -98,11 +221,11 @@ public class UserController {
     public @ResponseBody
     String addUser(@RequestBody User userToAdd) {
         result.clear();
-        int sign=1;
+        int sign = 1;
         // search if its username has existed
         if (userService.queryUserByUsername(userToAdd.getUsername()) != null) {
             result.put("msg", "用户名已存在");
-            sign=0;
+            sign = 0;
         } else {
             // 用户权限设置为最低
             userToAdd.setAuth("a2");
@@ -111,7 +234,7 @@ public class UserController {
             result.put("data", userService.queryUserByUsername(userToAdd.getUsername()).getUid());
         }
         result.put("status", 201);
-        result.put("sign",sign);
+        result.put("sign", sign);
         return JSON.toJSONString(result);
     }
 
@@ -146,56 +269,88 @@ public class UserController {
     @GetMapping("/me")
     @PreAuthorize("hasAnyRole('a0','a1','a2')")
     public @ResponseBody
-    String getMe() {
+    String getMe(HttpServletRequest req) {
         result.clear();
         User user = userService.queryUserByUsername(
                 SecurityContextHolder.getContext().getAuthentication().getName()
         );
         user.setPassword("[PROTECTED]");
+        // 设置session
+        req.getSession().setAttribute("me", user);
+        result.put("info", userInfoService.queryUserInfoByUid(user.getUid()));
+        result.put("user", user);
         return JSON.toJSONString(
-                user
+                result
         );
     }
 
     // change pwd
-    @ApiOperation(value = "更改密码",notes = "根据phone")
+    @ApiOperation(value = "更改密码", notes = "根据phone")
     @PreAuthorize("permitAll()")
-    @PatchMapping(value = "/pwd",consumes = "application/json")
+    @PatchMapping(value = "/pwd", consumes = "application/json")
     public @ResponseBody
-    String updPwd(@RequestBody HashMap<String,String> request) {
+    String updPwd(@RequestBody HashMap<String, String> request) {
         result.clear();
-        String msg="修改成功！";
-        User user=null;
-        int sign=1;
+        String msg = "修改成功！";
+        User user = null;
+        int sign = 1;
         String phone = request.get("phone");
         String pwd = request.get("password ");
         // find user
-        UserInfo info = userInfoService.queryUserInfoByParam("phone",phone);
-        if(info==null) {
-            sign=0;
-            msg="找不到该用户，请检查参数";
+        UserInfo info = userInfoService.queryUserInfoByParam("phone", phone);
+        if (info == null) {
+            sign = 0;
+            msg = "找不到该用户，请检查参数";
         } else {
-            user=userService.queryUserByUid(info.getUid());
+            user = userService.queryUserByUid(info.getUid());
         }
         // check uid
-        if (user==null) {
-            msg="找不到该用户，请检查uid";
-            sign=0;
-        }
-        else if (!userService.queryUserByUid(user.getUid()).getUsername().equals(user.getUsername())) {
-            msg="uid与username不匹配！";
-            sign=0;
+        if (user == null) {
+            msg = "找不到该用户，请检查uid";
+            sign = 0;
+        } else if (!userService.queryUserByUid(user.getUid()).getUsername().equals(user.getUsername())) {
+            msg = "uid与username不匹配！";
+            sign = 0;
         }
         // encoder pwd
-        if(sign==1) {
+        if (sign == 1) {
             user.setPassword(
                     Encoder.encode(pwd)
             );
             userService.updUser(user);
         }
         // return msg only
-        result.put("msg",msg);
-        result.put("sign",sign);
+        result.put("msg", msg);
+        result.put("sign", sign);
         return JSON.toJSONString(result);
+    }
+}
+
+class BasicUserInfo {
+    String uid;
+    String username;
+
+    public BasicUserInfo(String uid, String username) {
+        this.uid = uid;
+        this.username = username;
+    }
+
+    public BasicUserInfo() {
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

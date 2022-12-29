@@ -23,8 +23,8 @@ new Vue({
         return {
             loading: false,
             url: {
-                user: 'http://localhost/user',
-                info: 'http://localhost/info'
+                user: '/user',
+                info: '/info'
             },
             active: 0,
             rules: {

@@ -14,4 +14,7 @@ public class GetNew {
         // produce a new UID
         return String.valueOf(count+10000000);
     }
+    public String newPid(String fid, int count) {
+        return fid + "-" + String.valueOf(100001+count);
+    }
 }

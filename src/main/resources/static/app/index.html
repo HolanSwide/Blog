@@ -1,16 +1,9 @@
 <!DOCTYPE html>
-
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Galaxy - Personal Blog Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Blog</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,16 +21,21 @@
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
 
-    <!-- Vue -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- 引入element样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入element组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/element-ui-index.js"></script>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
+
 <body>
+    <!-- <div id="Layer1" style="position:fixed; left:0px; top:0px; width:100%; height:100%;opacity:0.6">
+        <img src="images/logo.png" width="100%" height="100%" />
+    </div> -->
     <!-- START preloader-wrapper -->
     <div class="preloader-wrapper">
         <div class="preloader-inner">
@@ -45,10 +43,9 @@
         </div>
     </div>
     <!-- END preloader-wrapper -->
-    
+
     <!-- START main-wrapper -->
     <section class="d-flex">
-  
 <!-- start of sidenav -->
 <aside><div class="sidenav position-sticky d-flex flex-column justify-content-between">
     <a class="navbar-brand" href="index.html" class="logo">
@@ -62,16 +59,15 @@
                 <a class="nav-link text-white px-0 pt-0" href="index.html">首页</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white px-0" href="about.html">关于</a>
+                <a class="nav-link text-white px-0" href="about.html">关注</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white px-0" href="contact.html">联系</a>
+                <a class="nav-link text-white px-0" href="contact.html">资料</a>
             </li>
             <li class="nav-item  accordion">
                 <div id="drop-menu" class="drop-menu collapse">
                     <a class="d-block " href="index-2.html">我的空间</a>
                     <a class="d-block " href="/logout">退出登录</a>
-                    <a class="d-block " href="post-details.html">消息</a>
                 </div>
                 <a class="nav-link text-white" href="#!" role="button" data-toggle="collapse" data-target="#drop-menu" aria-expanded="false" aria-controls="drop-menu">更多</a>
             </li>
@@ -125,81 +121,83 @@
 <div class="nav-toggle-overlay"></div>
 <!-- end of mobile-nav -->
         <div class="container pt-4 mt-5">
+            <div class="row">
+    <div class="col-lg-5 col-md-8" id="searchform">
+        <div @keyup.enter="doSearch" class="search-form">
+            <div class="input-group">
+                <select v-model="option" style="background-color: rgb(52, 51, 51);" class="text-white bg-transparent">
+                    <option style="background-color: rgb(52, 51, 51);" selected value="1"> 用户 </option>
+                    <option style="background-color:  rgb(52, 51, 51);" value="2"> 文章 </option>
+                </select> 
+                <input v-model="text" type="search" class="form-control bg-transparent shadow-none rounded-0" placeholder="Search here">
+                <div class="input-group-append">
+                    <span class="btn" @click="doSearch" >
+                        <span class="fas fa-search"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/searchform.js"></script>
             <div class="row justify-content-between">
-                <div class="col-lg-7">
-                    <div class="card post-item bg-transparent border-0 mb-5">
-                        <a href="post-details.html">
-                            <img class="card-img-top rounded-0" src="images/post/post-lg/01.png" alt="">
-                        </a>
-                        <div class="card-body px-0">
-                            <h2 class="card-title">
-                                <a class="text-white opacity-75-onHover" href="post-details.html">文章标题</a>
-                            </h2>
-                            <ul class="post-meta mt-3">
-                                <li class="d-inline-block mr-3">
-                                    <span class="fas fa-clock text-primary"></span>
-                                    <a class="ml-1" href="#">文章时间</a>
-                                </li>
-                                <li class="d-inline-block">
-                                    <span class="fas fa-list-alt text-primary"></span>
-                                    <a class="ml-1" href="#">文章标签</a>
-                                </li>
-                            </ul>
-                            <p class="card-text my-4">文章摘要 去读取数据库的航空器碍事的的味道和黑白电视机播放计划的失败链接哦i的房价物价非常积极的世界杯的健康和环境可视化的卡号的备份文件感到舒服i八十九激励大家老师们虚拟世界的初步微博和地位各色北大出版社的差别就是了家伙我看见清华的共和国删除v卡激活随队前往各地哈比是假的吧文化快点哈空间是地球温度很快就会框架设计的不吃不喝多少积分v就</p>
-                            <a href="post-details.html" class="btn btn-primary">阅读详情 <img src="images/arrow-right.png" alt=""></a>
-                        </div>
-                        
-                    </div>
-                    <!-- end of post-item -->
+                <div id="essays" class="col-lg-7">
                     
-                    <div class="card post-item bg-transparent border-0 mb-5">
+                    <!-- end of post-item -->
+                    <div v-for="e in essays">
+                        <div class="card post-item bg-transparent border-0 mb-5">
     <a href="post-details.html">
-        <img class="card-img-top rounded-0" src="images/post/post-lg/01.png" alt="">
+        <img class="card-img-top rounded-0" :src=e.cover alt="">
     </a>
     <div class="card-body px-0">
         <h2 class="card-title">
-            <a class="text-white opacity-75-onHover" href="post-details.html">文章标题</a>
+            <a class="text-white opacity-75-onHover" href="post-details.html">{{e.title}}</a>
         </h2>
         <ul class="post-meta mt-3">
             <li class="d-inline-block mr-3">
                 <span class="fas fa-clock text-primary"></span>
-                <a class="ml-1" href="#">文章时间</a>
+                <a class="ml-1" href="#">{{e.time}}</a>
             </li>
-            <li class="d-inline-block">
+            <li class="d-inline-block mr-3">
                 <span class="fas fa-list-alt text-primary"></span>
-                <a class="ml-1" href="#">文章标签</a>
+                <a class="ml-1" href="#">{{e.fid}}</a>
+            </li>
+            <li class="d-inline-block mr-3">
+                <span class="fa fa-address-card text-primary" ></span>
+                <a class="ml-1" href="#">{{e.username}}</a>
             </li>
         </ul>
-        <p class="card-text my-4">文章摘要 去读取数据库的航空器碍事的的味道和黑白电视机播放计划的失败链接哦i的房价物价非常积极的世界杯的健康和环境可视化的卡号的备份文件感到舒服i八十九激励大家老师们虚拟世界的初步微博和地位各色北大出版社的差别就是了家伙我看见清华的共和国删除v卡激活随队前往各地哈比是假的吧文化快点哈空间是地球温度很快就会框架设计的不吃不喝多少积分v就</p>
-        <a href="post-details.html" class="btn btn-primary">阅读详情 <img src="images/arrow-right.png" alt=""></a>
+        <p class="card-text my-4">{{e.summary}}</p>
+        <a :href="'post-details.html?'+e.pid" class="btn btn-primary">阅读详情 <img src="images/arrow-right.png" alt=""></a>
     </div>
     
 </div>
+                    </div>
                 </div>
-                <div class="col-lg-4 col-md-5">
+                <div id="user" class="col-lg-4 col-md-5">
                     <div class="widget text-center">
                         <img class="author-thumb-sm rounded-circle d-block mx-auto" src="images/author-sm.png" alt="">
-                        <h2 class="widget-title text-white d-inline-block mt-4">用户名</h2>
-                        <p class="mt-4">个性签名</p>
+                        <h2  class="widget-title text-white d-inline-block mt-4">{{username}}</h2>
+                        <p class="mt-4">{{sign}}</p>
                         <ul class="list-inline mt-3">
                             <li class="list-inline-item">
                                 <a href="#!" class="text-white text-primary-onHover p-2">
-                                    <span class="fab fa-twitter"></span>
+                                    <span class="fab fa-weixin"></span>
                                 </a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="#!" class="text-white text-primary-onHover p-2">
-                                    <span class="fab fa-facebook-f"></span>
+                                    <span class="fab fa-tiktok"></span>
                                 </a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="#!" class="text-white text-primary-onHover p-2">
-                                    <span class="fab fa-instagram"></span>
+                                    <span class="fab fa-whatsapp"></span>
                                 </a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="#!" class="text-white text-primary-onHover p-2">
-                                    <span class="fab fa-linkedin-in"></span>
+                                    <span class="fab fa-qq"></span>
                                 </a>
                             </li>
                         </ul>
@@ -210,7 +208,7 @@
                         <p class="mt-4">输入您的电子邮箱地址，以收到我们的新闻杂志</p>
                         <form action="#">
                             <div class="form-group">
-                                <input type="email" class="form-control bg-transparent rounded-0 my-4" placeholder="Your Email Address">
+                                <input :value="email" type="email" class="form-control bg-transparent rounded-0 my-4">
                                 <button class="btn btn-primary">订阅！ <img src="images/arrow-right.png" alt=""></button>
                             </div>
                         </form>
@@ -227,12 +225,12 @@
                             </a>
                             <div class="card-body px-0">
                                 <h2 class="card-title">
-                                    <a class="text-white opacity-75-onHover" href="post-details.html">Excepteur ado Do minimal duis laborum Fugiat ea</a>
+                                    <a class="text-white opacity-75-onHover" href="post-details.html">flower dance</a>
                                 </h2>
                                 <ul class="post-meta mt-3 mb-4">
                                     <li class="d-inline-block mr-3">
                                         <span class="fas fa-clock text-primary"></span>
-                                        <a class="ml-1" href="#">24 April, 2016</a>
+                                        <a class="ml-1" href="#">24 December, 2022</a>
                                     </li>
                                     <li class="d-inline-block">
                                         <span class="fas fa-list-alt text-primary"></span>
@@ -249,12 +247,12 @@
                             </a>
                             <div class="card-body px-0">
                                 <h2 class="card-title">
-                                    <a class="text-white opacity-75-onHover" href="post-details.html">Excepteur ado Do minimal duis laborum Fugiat ea</a>
+                                    <a class="text-white opacity-75-onHover" href="post-details.html">is this the real life</a>
                                 </h2>
                                 <ul class="post-meta mt-3 mb-4">
                                     <li class="d-inline-block mr-3">
                                         <span class="fas fa-clock text-primary"></span>
-                                        <a class="ml-1" href="#">24 April, 2016</a>
+                                        <a class="ml-1" href="#">24 December, 2022</a>
                                     </li>
                                     <li class="d-inline-block">
                                         <span class="fas fa-list-alt text-primary"></span>
@@ -314,9 +312,10 @@
 </footer>
 <!-- end of footer -->
     </div>
-
+    <script src="js/index.js"></script>
     </section>
     <!-- END main-wrapper -->
+
 
     <!-- All JS Files -->
     <script src="plugins/jQuery/jquery.min.js"></script>
@@ -324,5 +323,7 @@
 
     <!-- Main Script -->
     <script src="js/script.js"></script>
+
+
 </body>
 </html>

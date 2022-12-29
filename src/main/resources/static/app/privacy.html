@@ -1,16 +1,9 @@
 <!DOCTYPE html>
-
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Galaxy - Personal Blog Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Blog</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,16 +21,21 @@
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
 
-    <!-- Vue -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- 引入element样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入element组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/element-ui-index.js"></script>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
+
 <body>
+    <!-- <div id="Layer1" style="position:fixed; left:0px; top:0px; width:100%; height:100%;opacity:0.6">
+        <img src="images/logo.png" width="100%" height="100%" />
+    </div> -->
     <!-- START preloader-wrapper -->
     <div class="preloader-wrapper">
         <div class="preloader-inner">
@@ -45,10 +43,9 @@
         </div>
     </div>
     <!-- END preloader-wrapper -->
-    
+
     <!-- START main-wrapper -->
     <section class="d-flex">
-  
 <!-- start of sidenav -->
 <aside><div class="sidenav position-sticky d-flex flex-column justify-content-between">
     <a class="navbar-brand" href="index.html" class="logo">
@@ -62,16 +59,15 @@
                 <a class="nav-link text-white px-0 pt-0" href="index.html">首页</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white px-0" href="about.html">关于</a>
+                <a class="nav-link text-white px-0" href="about.html">关注</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white px-0" href="contact.html">联系</a>
+                <a class="nav-link text-white px-0" href="contact.html">资料</a>
             </li>
             <li class="nav-item active accordion">
                 <div id="drop-menu" class="drop-menu collapse">
                     <a class="d-block " href="index-2.html">我的空间</a>
                     <a class="d-block " href="/logout">退出登录</a>
-                    <a class="d-block " href="post-details.html">消息</a>
                 </div>
                 <a class="nav-link text-white" href="#!" role="button" data-toggle="collapse" data-target="#drop-menu" aria-expanded="false" aria-controls="drop-menu">更多</a>
             </li>
@@ -127,19 +123,24 @@
 
             <div class="container py-4 my-5">
                 <div class="row">
-    <div class="col-lg-5 col-md-8">
-        <form class="search-form" action="#">
+    <div class="col-lg-5 col-md-8" id="searchform">
+        <div @keyup.enter="doSearch" class="search-form">
             <div class="input-group">
-                <input type="search" class="form-control bg-transparent shadow-none rounded-0" placeholder="Search here">
+                <select v-model="option" style="background-color: rgb(52, 51, 51);" class="text-white bg-transparent">
+                    <option style="background-color: rgb(52, 51, 51);" selected value="1"> 用户 </option>
+                    <option style="background-color:  rgb(52, 51, 51);" value="2"> 文章 </option>
+                </select> 
+                <input v-model="text" type="search" class="form-control bg-transparent shadow-none rounded-0" placeholder="Search here">
                 <div class="input-group-append">
-                    <button class="btn" type="submit">
+                    <span class="btn" @click="doSearch" >
                         <span class="fas fa-search"></span>
-                    </button>
+                    </span>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
+<script src="js/searchform.js"></script>
                 <div class="row">
                     <div class="col-md-9">
                         <h1 class="text-white add-letter-space mb-3">Privacy &amp; Policy</h1>
@@ -221,11 +222,14 @@
         </section>
     <!-- END main-wrapper -->
 
+
     <!-- All JS Files -->
     <script src="plugins/jQuery/jquery.min.js"></script>
     <script src="plugins/bootstrap/bootstrap.min.js"></script>
 
     <!-- Main Script -->
     <script src="js/script.js"></script>
+
+
 </body>
 </html>

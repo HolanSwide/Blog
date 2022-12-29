@@ -2,6 +2,7 @@ package com.holanswide.blog.service;
 
 import com.holanswide.blog.dao.EssayMapper;
 import com.holanswide.blog.pojo.Essay;
+import com.holanswide.blog.pojo.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,33 @@ public class EssayService implements EssayMapper{
     }
 
     @Override
-    public List<Essay> queryEssayByIndex(String seach, int begin, int end) {
-        return essayMapper.queryEssayByIndex(seach,begin,end);
+    public List<Field> queryFieldAll() {
+        return essayMapper.queryFieldAll();
+    }
+
+    @Override
+    public List<Essay> queryEssayAuto(int begin, int end) {
+        return essayMapper.queryEssayAuto(begin, end);
+    }
+
+    @Override
+    public Field queryFieldByFid(String fid) {
+        return essayMapper.queryFieldByFid(fid);
+    }
+
+    @Override
+    public Field queryFieldByFname(String fname) {
+        return essayMapper.queryFieldByFname(fname);
+    }
+
+    @Override
+    public List<Essay> queryEssayByIndex(String search, int begin, int end) {
+        return essayMapper.queryEssayByIndex(search,begin,end);
+    }
+
+    @Override
+    public int queryCount() {
+        return essayMapper.queryCount();
     }
 
     @Override
@@ -35,5 +61,10 @@ public class EssayService implements EssayMapper{
     @Override
     public void delEssay(String pid) {
         essayMapper.delEssay(pid);
+    }
+
+    @Override
+    public void addField(Field field) {
+        essayMapper.addField(field);
     }
 }

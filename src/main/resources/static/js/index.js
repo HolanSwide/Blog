@@ -37,8 +37,8 @@ new Vue({
                 rememberMe:false
             },
             url: {
-                login: 'http://localhost/dologin',
-                register: 'http://localhost/user'
+                login: '/dologin',
+                register: '/user'
             }
         };
     },
@@ -79,7 +79,7 @@ new Vue({
             });
             if (isDirect) {
                 setTimeout(function () {
-                    location.href = "http://localhost/blog";
+                    location.href = "/blog";
                 }, 1000);
             }
         }
